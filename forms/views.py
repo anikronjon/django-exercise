@@ -41,7 +41,7 @@ def login_view(request):
             form = AuthenticationForm(request, request.POST)
             if form.is_valid():
                 username = form.cleaned_data['username']
-                password = form.password['password']
+                password = form.cleaned_data['password']
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     login(request, user)
@@ -56,5 +56,10 @@ def login_view(request):
 def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
-        return HttpResponseRedirect('/registration/')
+        return HttpResponseRedirect('/login/')
+    else:
+        return HttpResponseRedirect('/')
+
+
+
 
