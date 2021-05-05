@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Document{% endblock %}</title>
+</head>
+<body>
+    <h2>______________Hi My Dear Friend_______________</h2>
+    <button><a href="{% url 'forms:home' %}">HomePage</a></button>
+    <button><a href="{% url 'forms:registration' %}">Registration</a></button>
+    {% block content %}
+
+    {% endblock content %}
+</body>
+</html>
