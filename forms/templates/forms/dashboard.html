@@ -4,5 +4,21 @@
 {% block content %}
     <h2>User Dashboard</h2>
     <h3>Login as: {{ name }}</h3>
+    <form action="" method="post">{% csrf_token %}
+        {% for form in form %}
+            {{ form.label_tag }}
+            {{ form }}<br><br>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+
+    <hr>
+    <form action="" method="post">{% csrf_token %}
+    {% for form in form %}
+        {{ form.label_tag }}
+        {{ form.value }}<br><br>
+    {% endfor %}
+
+    </form>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserDashboardForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
@@ -11,7 +11,13 @@ def home_view(request):
 
 def dashboard_view(request):
     if request.user.is_authenticated:
-        return render(request, 'forms/dashboard.html', {'name': request.user})
+        if request.method == "POST":
+            form = UserDashboardForm(instance=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+        else:
+            form = UserDashboardForm(instance=request.user)
+        return render(request, 'forms/dashboard.html', {'form': form, 'name': request.user})
     else:
         return HttpResponseRedirect('/registration/')
 
