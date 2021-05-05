@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import UserRegistrationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -32,4 +32,10 @@ def registration_view(request):
         return render(request, 'forms/registration.html', {'form': form, 'name': request.user})
     else:
         return HttpResponseRedirect('/dashboard/')
+
+
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return HttpResponseRedirect('/registration/')
 
