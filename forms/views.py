@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import UserRegistrationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -30,6 +31,24 @@ def registration_view(request):
         else:
             form = UserRegistrationForm()
         return render(request, 'forms/registration.html', {'form': form, 'name': request.user})
+    else:
+        return HttpResponseRedirect('/dashboard/')
+
+
+def login_view(request):
+    if not request.user.is_authenticated:
+        if request.method == "POST":
+            form = AuthenticationForm(request, request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.password['password']
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return HttpResponseRedirect('/dashboard/')
+        else:
+            form = AuthenticationForm()
+        return render(request, 'forms/login.html', {'form': form})
     else:
         return HttpResponseRedirect('/dashboard/')
 

@@ -7,7 +7,8 @@
     {% csrf_token %}
         {% for form in form %}
             {{ form.label_tag }}
-            {{ form }}<br><br>
+            {{ form }}
+            {{ form.errors }}<br><br>
         {% endfor %}
         <input type="submit" value="Submit">
     </form>
