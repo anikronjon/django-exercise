@@ -8,6 +8,13 @@ def home_view(request):
     return render(request, 'forms/homepage.html', {'name': request.user})
 
 
+def dashboard_view(request):
+    if request.user.is_authenticated:
+        return render(request, 'forms/dashboard.html', {'name': request.user})
+    else:
+        return HttpResponseRedirect('/registration/')
+
+
 def registration_view(request):
     if not request.user.is_authenticated:
         if request.method == "POST":
@@ -19,8 +26,10 @@ def registration_view(request):
                     password=form.cleaned_data['password1']
                 )
                 login(request, newcomer)
-                return HttpResponseRedirect('dashbord/')
+                return HttpResponseRedirect('/dashboard/')
         else:
             form = UserRegistrationForm()
         return render(request, 'forms/registration.html', {'form': form, 'name': request.user})
+    else:
+        return HttpResponseRedirect('/dashboard/')
 
