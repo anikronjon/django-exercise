@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .forms import UserRegistrationForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
 
 # Create your views here.
@@ -61,5 +61,19 @@ def logout_view(request):
         return HttpResponseRedirect('/')
 
 
+# Password change using old password.
+def change_password_view(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = PasswordChangeForm(user=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, user=form.user)
+                return HttpResponseRedirect('/')
+        else:
+            form = PasswordChangeForm(user=request.user)
+        return render(request, 'forms/password_change.html', {'form': form})
+    else:
+        return HttpResponseRedirect('/login/')
 
 
