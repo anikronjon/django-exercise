@@ -7,3 +7,4 @@ from .models import Category, Post, Media
 class PostsView(generic.ListView):
     """List of post view"""
     queryset = Post.publish_objects.all()
+    context_object_name = 'posts'

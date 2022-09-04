@@ -22,5 +22,6 @@ class MediaInline(admin.TabularInline):
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'status', 'created', 'updated')
     list_editable = ('status',)
+    radio_fields = {'status': admin.HORIZONTAL}
     prepopulated_fields = {'slug': ('title',)}
     inlines = [MediaInline]

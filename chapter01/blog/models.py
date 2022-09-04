@@ -29,7 +29,7 @@ class Post(models.Model):
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length=2, default=STATUS.DRAFT)
+    status = models.CharField(max_length=2, choices=STATUS.choices, default=STATUS.DRAFT)
 
     objects = models.Manager()  # The default manager
     publish_objects = PublishedManager()    # Custom manager
